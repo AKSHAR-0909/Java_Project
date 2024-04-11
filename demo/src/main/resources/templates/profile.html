@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <link rel="stylesheet" th:href="@{/profile.css}">
+
+</head>
+<body>
+
+    <h2>User Profile</h2>
+
+    <div>
+        <p><strong>User ID:</strong> <span th:text="${user.userId}"></span></p>
+        <p><strong>Name:</strong> <span th:text="${user.name}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+        <p><strong>Phone Number:</strong> <span th:text="${user.phoneNumber}"></span></p>
+        <p><strong>Address:</strong> <span th:text="${user.address}"></span></p>
+    </div>
+
+    <div>
+        <h3>Bookings</h3>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Booking ID</th>
+                    <th>View</th>
+                    <th>Booking Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="booking : ${user.bookings}">
+                    <td th:text="${booking.bookingId}"></td>
+                    <td>
+                        <a th:href="@{/flights/{flightId}(flightId=${booking.flightId})}" th:text="'Flight Details'">Flight Details</a>
+                    </td>
+                    
+                    <td th:text="${booking.bookingDate}"></td>
+                    <td th:text="${booking.status}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

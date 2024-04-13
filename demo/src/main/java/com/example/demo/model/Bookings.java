@@ -24,8 +24,9 @@ public class Bookings {
     @JoinColumn(name = "userId")
     private Users user;
 
-    // private Discount discount;  
-    // Add discount field
+    // Added discount field
+    private Discount discount;  
+    
 
 
     // Getters and Setters

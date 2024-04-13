@@ -24,6 +24,9 @@ public class Bookings {
     @JoinColumn(name = "userId")
     private Users user;
 
+    // private Discount discount;  
+    // Add discount field
+
 
     // Getters and Setters
     public int getBookingId() {
@@ -64,5 +67,17 @@ public class Bookings {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+    
+    // Discount feature in Booking Class
+    public void setDiscount(Discount discount) {
+        this.discount = discount;
+    }
+
+    public float calculateTotal(float originalAmount) {
+        if (discount != null) {
+            return discount.applyDiscount(originalAmount);
+        }
+        return originalAmount;
     }
 }

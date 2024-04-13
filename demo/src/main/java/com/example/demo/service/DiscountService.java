@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class DiscountService {
 
-    public void applyDiscountToBooking(Booking booking, Discount discount) {
+    public void applyDiscountToBooking(Bookings booking, Discount discount) {
+
         // Apply the discount to the booking
         // Calculate the discounted price and update the booking
 

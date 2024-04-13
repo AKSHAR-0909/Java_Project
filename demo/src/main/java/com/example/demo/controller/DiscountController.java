@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Booking;
+import com.example.demo.model.Bookings;
 import com.example.demo.model.Discount;
 import com.example.demo.service.DiscountService;
 import com.example.demo.service.BookingService; // Import BookingService
@@ -23,7 +23,7 @@ public class DiscountController {
     public ResponseEntity<?> applyDiscount(@PathVariable int bookingId, @RequestBody Discount discount) {
         try {
             // Fetch the Booking object based on the ID
-            Booking booking = bookingService.getBookingById(bookingId);
+            Bookings booking = bookingService.getBookingById(bookingId);
             // Pass the Booking object to the service method
             discountService.applyDiscountToBooking(booking, discount);
             return ResponseEntity.ok("Discount applied successfully");

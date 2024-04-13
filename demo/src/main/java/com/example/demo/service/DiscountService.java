@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.model.Bookings;
+import com.example.demo.model.Bookings; // Change import
 import com.example.demo.model.Discount;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +15,12 @@ public class DiscountService {
         // Check if the booking and discount are not null
         if (booking != null && discount != null) {
             // Calculate the discounted price based on the discount
-            double discountedPrice = calculateDiscountedPrice(booking.getPrice(), discount.getAmount());
+            //double discountedPrice = calculateDiscountedPrice(booking.getPrice(), discount.getAmount());
 
             // Update the booking with the discounted price and mark it as discounted
-            booking.setPrice(discountedPrice);
-            booking.setDiscountApplied(true);
+            //booking.setPrice(discountedPrice);
+            // Update other fields as needed
+            // booking.setDiscountApplied(true);
 
             // Optionally, you can log or perform any other operations here
 

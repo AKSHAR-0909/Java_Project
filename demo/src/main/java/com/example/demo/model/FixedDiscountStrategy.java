@@ -10,6 +10,6 @@ public class FixedDiscountStrategy implements DiscountStrategy {
 
     @Override
     public float applyDiscount(float price) {
-        return price - discountAmount;
+        return discountAmount;
     }
 }

@@ -15,7 +15,7 @@ public class DiscountService {
         // Check if the booking and discount are not null
         if (booking != null && discount != null) {
             // Calculate the discounted price based on the discount
-            double discountedPrice = calculateDiscountedPrice(booking.getPrice(), discount.getAmount());
+            float discountedPrice = calculateDiscountedPrice(booking.getPrice(), discount.applyDiscount(booking.getPrice()));
 
             // Update the booking with the discounted price and mark it as discounted
             booking.setPrice(discountedPrice);
@@ -33,7 +33,7 @@ public class DiscountService {
     }
 
     // Method to calculate the discounted price based on the original price and discount amount
-    private double calculateDiscountedPrice(double originalPrice, double discountAmount) {
+    private float calculateDiscountedPrice(float originalPrice, float discountAmount) {
         return originalPrice - discountAmount;
     }
 }

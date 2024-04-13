@@ -9,6 +9,6 @@ public class PercentageDiscountStrategy implements DiscountStrategy {
 
     @Override
     public float applyDiscount(float price) {
-        return price * (1 - discountPercentage / 100);
+        return price * (discountPercentage / 100);
     }
 }

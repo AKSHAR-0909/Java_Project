@@ -1,14 +1,19 @@
-package com.example.model;
+package com.example.demo.model;
 
 public class FixedDiscount implements Discount {
-    private float discountAmount;
+    private float amount;
 
-    public FixedDiscount(float discountAmount) {
-        this.discountAmount = discountAmount;
+    public FixedDiscount(float amount) {
+        this.amount = amount;
     }
 
     @Override
-    public float applyDiscount(float amount) {
-        return amount - discountAmount;
+    public float applyDiscount(float originalAmount) {
+        return originalAmount - amount;
+    }
+
+    @Override
+    public float getAmount() {
+        return amount;
     }
 }

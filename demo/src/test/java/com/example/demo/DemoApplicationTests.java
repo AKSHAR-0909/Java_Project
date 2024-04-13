@@ -9,19 +9,6 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 @Disabled("Temporarily disabled due to failure")
-public class MyTest {
-
-    @Test
-    public void myFailingTest() {
-        // Test logic
-    }
-
-    @Test
-    public void anotherFailingTest() {
-        // Test logic
-    }
-}
-
 @SpringBootTest
 class DemoApplicationTests {
 

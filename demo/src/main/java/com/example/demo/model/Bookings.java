@@ -8,6 +8,16 @@ import jakarta.persistence.ManyToOne;
 import java.time.LocalDate;
 
 @Entity
+@Entity
+public class Users {
+    // Other properties
+
+    @OneToMany(mappedBy = "user") // Correct the mappedBy attribute to match the property name in Bookings entity
+    private List<Bookings> bookings;
+
+    // Getters and setters
+}
+
 public class Bookings {
 
     @Id

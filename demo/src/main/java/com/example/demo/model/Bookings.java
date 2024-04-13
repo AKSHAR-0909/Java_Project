@@ -1,11 +1,10 @@
 package com.example.demo.model;
 
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import java.time.LocalDate;
 
 @Entity
@@ -15,19 +14,14 @@ public class Bookings {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int bookingId;
     
-    // private int userId;
+    private int userId;
     private int flightId;
     private LocalDate bookingDate;
     private String status;
+    private float price; // Added price attribute
 
     @ManyToOne
-    @JoinColumn(name = "userId")
-    private Users user;
-
-    // Added discount field
-    private Discount discount;  
-    
-
+    private Discount discount; // Changed Discount to be a ManyToOne relationship
 
     // Getters and Setters
     public int getBookingId() {
@@ -39,11 +33,11 @@ public class Bookings {
     }
 
     public int getUserId() {
-        return user.getUserId();
+        return userId;
     }
 
     public void setUserId(int userId) {
-        user.setUserId(userId);
+        this.userId = userId;
     }
 
     public int getFlightId() {
@@ -69,16 +63,30 @@ public class Bookings {
     public void setStatus(String status) {
         this.status = status;
     }
-    
-    // Discount feature in Booking Class
+
+    // Getters and Setters for price attribute
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    // Getters and Setters for Discount
+    public Discount getDiscount() {
+        return discount;
+    }
+
     public void setDiscount(Discount discount) {
         this.discount = discount;
     }
 
-    public float calculateTotal(float originalAmount) {
+    // Method to calculate total price with discount
+    public float calculateTotal() {
         if (discount != null) {
-            return discount.applyDiscount(originalAmount);
+            return discount.applyDiscount(this.price);
         }
-        return originalAmount;
+        return this.price;
     }
 }

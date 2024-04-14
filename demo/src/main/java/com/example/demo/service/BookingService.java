@@ -13,6 +13,12 @@ public class BookingService {
     @Autowired
     private BookingRepository bookingRepository;
 
+    @Autowired
+    private Discount fixedDiscountService;
+
+    @Autowired
+    private Discount percentageDiscountService;
+
     public List<Bookings> getAllBookings() {
         return bookingRepository.findAll();
     }
@@ -22,6 +28,16 @@ public class BookingService {
     }
 
     public Bookings saveBooking(Bookings booking) {
+        float totalPrice = booking.getTotalPrice();
+        Discount selectedDiscount = totalPrice < 500 ? percentageDiscountService : fixedDiscountService;
+        
+        // Check if discount has been applied already
+        if (!booking.isDiscountApplied()) {
+            float discountedPrice = selectedDiscount.applyDiscount(totalPrice);
+            booking.setTotalPrice(discountedPrice);
+            booking.setDiscountApplied(true); // Update discount status
+        }
+        
         return bookingRepository.save(booking);
     }
 

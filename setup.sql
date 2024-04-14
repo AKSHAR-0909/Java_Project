@@ -53,3 +53,8 @@ INSERT INTO flight (source, destination, departure_date, return_date, price, ava
 ('New York', 'Los Angeles', '2024-05-01', '2024-05-05', 500.00, 200, 'OneWay'),
 ('Chicago', 'Miami', '2024-06-10', '2024-06-15', 600.00, 150, 'TwoWay'),
 ('San Francisco', 'Seattle', '2024-07-20', '2024-07-25', 400.00, 180, 'OneWay');
+
+CREATE TABLE admin (
+    user_id SERIAL PRIMARY KEY,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);

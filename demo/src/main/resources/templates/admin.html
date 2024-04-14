@@ -31,7 +31,7 @@
             background-color: #f2f2f2;
         }
 
-        .delete-btn {
+        .delete-btn-u {
             background-color: #f44336;
             border: none;
             color: #fff;
@@ -43,6 +43,46 @@
             margin: 4px 2px;
             cursor: pointer;
         }
+
+        .delete-btn-p {
+            background-color: #f44336;
+            border: none;
+            color: #fff;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .delete-btn-f {
+            background-color: #f44336;
+            border: none;
+            color: #fff;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .delete-btn-b {
+            background-color: #f44336;
+            border: none;
+            color: #fff;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
     </style>
     <h1>Admin Page</h1>
 
@@ -52,12 +92,12 @@
         <tr>
             <th>User ID</th>
             <th>Password</th>
-            <th>Action</th> <!-- New column for delete button -->
+            <th>Delete</th> <!-- New column for delete button -->
         </tr>
         <tr th:each="user : ${users}">
             <td th:text="${user.userId}"></td>
             <td th:text="${user.password}"></td>
-            <td><button class="delete-btn" data-type="user" data-id="${user.userId}">Delete</button></td> <!-- Delete button -->
+            <td><button class="delete-btn-u" data-type="user" data-id="${user.userId}" th:id="userId" th:text="${user.userId}">Delete</button></td> <!-- Delete button -->
         </tr>
     </table>
 
@@ -71,7 +111,7 @@
             <th>Password</th>
             <th>Phone Number</th>
             <th>Address</th>
-            <th>Action</th> <!-- New column for delete button -->
+            <th>Delete</th> <!-- New column for delete button -->
         </tr>
         <tr th:each="person : ${persons}">
             <td th:text="${person.userId}"></td>
@@ -80,7 +120,7 @@
             <td th:text="${person.password}"></td>
             <td th:text="${person.phoneNumber}"></td>
             <td th:text="${person.address}"></td>
-            <td><button class="delete-btn" data-type="person" data-id="${person.userId}">Delete</button></td> <!-- Delete button -->
+            <td><button class="delete-btn-p" data-type="person" data-id="${person.userId}" th:id="personId" th:text="${person.userId}">Delete</button></td> <!-- Delete button -->
         </tr>
     </table>
 
@@ -93,7 +133,7 @@
             <th>Flight ID</th>
             <th>Booking Date</th>
             <th>Status</th>
-            <th>Action</th> <!-- New column for delete button -->
+            <th>Delete</th> <!-- New column for delete button -->
         </tr>
         <tr th:each="booking : ${bookings}">
             <td th:text="${booking.bookingId}"></td>
@@ -101,7 +141,7 @@
             <td th:text="${booking.flightId}"></td>
             <td th:text="${booking.bookingDate}"></td>
             <td th:text="${booking.status}"></td>
-            <td><button class="delete-btn" data-type="booking" data-id="${booking.bookingId}">Delete</button></td> <!-- Delete button -->
+            <td><button class="delete-btn-b" data-type="booking" data-id="${booking.bookingId}" th:id="bookingId" th:text="${booking.userId}">Delete</button></td> <!-- Delete button -->
         </tr>
     </table>
 
@@ -117,7 +157,7 @@
             <th>Price</th>
             <th>Available Seats</th>
             <th>Flight Type</th>
-            <th>Action</th> <!-- New column for delete button -->
+            <th>Delete</th> <!-- New column for delete button -->
         </tr>
         <tr th:each="flight : ${flights}">
             <td th:text="${flight.flightId}"></td>
@@ -128,25 +168,26 @@
             <td th:text="${flight.price}"></td>
             <td th:text="${flight.availableSeats}"></td>
             <td th:text="${flight.flightType}"></td>
-            <td><button class="delete-btn" data-type="flight" data-id="${flight.flightId}">Delete</button></td> <!-- Delete button -->
+            <td><button class="delete-btn-f" data-type="flight" data-id="${flight.flightId}" th:id="flightId" th:text="${flight.flightId}">Delete</button></td> <!-- Delete button -->
         </tr>
     </table>
 
-    <!-- JavaScript to handle delete button click -->
     <script>
-            $(document).ready(function() {
-            $(".delete-btn").click(function() {
-                var type = $(this).data("type"); // Get type of data to delete
-                var id = $(this).data("id"); // Get ID of data to delete
+        $(document).ready(function() {
+            $(".delete-btn-f").click(function() {
+                var type = $(this).data("type"); 
+                var id = $(this).data("id");
+                console.log("Clicked on delete button for " + type + " with ID: " + id);
+                var flightId = document.getElementById('flightId').innerText;
+                console.log("Flight ID: " + flightId);
                 var confirmation = confirm("Are you sure you want to delete this " + type + "?");
                 if (confirmation) {
-                    var url = "/delete" + type + "/" + id;
                     $.ajax({
-                        url: url, // Updated URL
+                        url: "/delete" + type + "/" + flightId,
                         type: "DELETE",
                         success: function(response) {
                             alert(type + " deleted successfully!");
-                            location.reload(); // Reload page after deletion
+                            location.reload();
                         },
                         error: function(xhr, status, error) {
                             alert("Error deleting " + type + ": " + error);
@@ -154,8 +195,74 @@
                     });
                 }
             });
-        });
 
-    </script>    
+            $(".delete-btn-u").click(function() {
+                var type = $(this).data("type"); 
+                var id = $(this).data("id");
+                console.log("Clicked on delete button for " + type + " with ID: " + id);
+                var userId = document.getElementById('userId').innerText;
+                console.log("Flight ID: " + flightId);
+                var confirmation = confirm("Are you sure you want to delete this " + type + "?");
+                if (confirmation) {
+                    $.ajax({
+                        url: "/delete" + type + "/" + userId,
+                        type: "DELETE",
+                        success: function(response) {
+                            alert(type + " deleted successfully!");
+                            location.reload();
+                        },
+                        error: function(xhr, status, error) {
+                            alert("Error deleting " + type + ": Not allowed to delete users");
+                        }
+                    });
+                }
+            });
+
+            $(".delete-btn-b").click(function() {
+                var type = $(this).data("type"); 
+                var id = $(this).data("id");
+                console.log("Clicked on delete button for " + type + " with ID: " + id);
+                var bookingId = document.getElementById('bookingId').innerText;
+                console.log("Flight ID: " + flightId);
+                var confirmation = confirm("Are you sure you want to delete this " + type + "?");
+                if (confirmation) {
+                    $.ajax({
+                        url: "/delete" + type + "/" + bookingId,
+                        type: "DELETE",
+                        success: function(response) {
+                            alert(type + " deleted successfully!");
+                            location.reload();
+                        },
+                        error: function(xhr, status, error) {
+                            alert("Error deleting " + type + ": " + error);
+                        }
+                    });
+                }
+            });
+
+            $(".delete-btn-p").click(function() {
+                var type = $(this).data("type"); 
+                var id = $(this).data("id");
+                console.log("Clicked on delete button for " + type + " with ID: " + id);
+                var userId = document.getElementById('userId').innerText;
+                console.log("Flight ID: " + flightId);
+                var confirmation = confirm("Are you sure you want to delete this " + type + "?");
+                if (confirmation) {
+                    $.ajax({
+                        url: "/delete" + type + "/" + userId,
+                        type: "DELETE",
+                        success: function(response) {
+                            alert(type + " deleted successfully!");
+                            location.reload();
+                        },
+                        error: function(xhr, status, error) {
+                            alert("Error deleting " + type + ": Not allowed to delete persons" );
+                        }
+                    });
+                }
+            });
+
+        });
+    </script>     
 </body>
 </html>

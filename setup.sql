@@ -1,4 +1,3 @@
--- Create tables
 CREATE TABLE person (
     user_id SERIAL PRIMARY KEY,
     name VARCHAR(255),
@@ -8,19 +7,21 @@ CREATE TABLE person (
     address VARCHAR(255)
 );
 
+INSERT INTO person (name, email, password, phone_number, address) VALUES
+('John Doe', 'johndoe@example.com', 'password123', '1234567890', '123 Main St'),
+('Jane Smith', 'janesmith@example.com', 'password456', '0987654321', '456 Elm St');
+
 CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
     password VARCHAR(255) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES person(user_id)
 );
 
-CREATE TABLE discount (
-    discount_id SERIAL PRIMARY KEY,
-    discount_type VARCHAR(50) NOT NULL,
-    threshold FLOAT,
-    fixed_amount FLOAT,
-    percentage FLOAT
-);
+
+INSERT INTO users (user_id, password) VALUES
+(1, 'password123'),
+(2, 'password456');
+
 
 CREATE TABLE bookings (
     booking_id SERIAL PRIMARY KEY,
@@ -28,11 +29,18 @@ CREATE TABLE bookings (
     flight_id INT,
     booking_date DATE,
     status VARCHAR(50),
-    price FLOAT,
-    discount_id INT,
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
-    FOREIGN KEY (discount_id) REFERENCES discount(discount_id)
+    discount_applied BOOLEAN DEFAULT false, -- Added discount_applied column
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
+
+ALTER TABLE bookings
+ADD COLUMN total_price FLOAT;
+
+INSERT INTO bookings (user_id, flight_id, booking_date, total_price, status) VALUES
+(1, 1, '2024-04-05',500.00, 'Confirmed'),
+(1, 3, '2024-04-06',400.00, 'Pending'),
+(2, 2, '2024-04-07',600.00, 'Confirmed');
+
 
 CREATE TABLE flight (
     flight_id SERIAL PRIMARY KEY,
@@ -44,23 +52,6 @@ CREATE TABLE flight (
     available_seats INT,
     flight_type VARCHAR(50)
 );
-
--- Insert data
-INSERT INTO person (name, email, password, phone_number, address) VALUES
-('John Doe', 'johndoe@example.com', 'password123', '1234567890', '123 Main St'),
-('Jane Smith', 'janesmith@example.com', 'password456', '0987654321', '456 Elm St');
-
-INSERT INTO users (user_id, password) VALUES
-(1, 'password123'),
-(2, 'password456');
-
-INSERT INTO discount (discount_type, threshold, fixed_amount, percentage) VALUES
-('Threshold', 500.00, 50.00, 10.00);
-
-INSERT INTO bookings (user_id, flight_id, booking_date, status, price, discount_id) VALUES
-(1, 1, '2024-04-05', 'Confirmed', 500.00, 1),
-(1, 3, '2024-04-06', 'Pending', 600.00, 1),
-(2, 2, '2024-04-07', 'Confirmed', 400.00, 1);
 
 INSERT INTO flight (source, destination, departure_date, return_date, price, available_seats, flight_type) VALUES
 ('New York', 'Los Angeles', '2024-05-01', '2024-05-05', 500.00, 200, 'OneWay'),

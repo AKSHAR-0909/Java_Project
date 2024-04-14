@@ -27,6 +27,8 @@
                     <th>View</th>
                     <th>Booking Date</th>
                     <th>Status</th>
+                    <th>Total Price</th>
+                    <th>Discount Availed?</th>
                 </tr>
             </thead>
             <tbody>
@@ -38,6 +40,8 @@
                     
                     <td th:text="${booking.bookingDate}"></td>
                     <td th:text="${booking.status}"></td>
+                    <td th:text="${booking.totalPrice}"></td>
+                    <td th:text="${booking.discountApplied}"></td>
                 </tr>
             </tbody>
         </table>

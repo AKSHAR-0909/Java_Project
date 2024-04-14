@@ -5,7 +5,9 @@ import com.example.demo.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.*;
 
@@ -28,5 +30,13 @@ public class FlightController {
         model.addAttribute("flights", flights);
         return "flights";
     }
+
+    @DeleteMapping("/deleteFlight/{id}")
+    public ResponseEntity<String> deleteFlight(@PathVariable int id) {
+        // Implement delete logic here
+        flightService.deleteFlight(id);
+        return ResponseEntity.ok("Flight deleted successfully");
+    }
+
 
 }

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.http.ResponseEntity;
 
 
 
@@ -45,5 +47,12 @@ public class PersonController {
         return "profile"; // This will render profile.html template
     }
 
+    @DeleteMapping("/deletePerson/{id}")
+    public ResponseEntity<String> deletePerson(@PathVariable int id) {
+        // Implement delete logic here
+        personService.deletePerson(id);
+        return ResponseEntity.ok("Person deleted successfully");
+    }
+    
 
 }
